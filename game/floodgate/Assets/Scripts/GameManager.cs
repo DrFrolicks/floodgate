@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; 
+using System.Linq;
+using System; 
 public class GameManager : Singleton<GameManager>
 {
     public GameObject phraseTemplate; 
@@ -16,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 
         //load phrase text
         var textFile = Resources.Load<TextAsset>("Phrases");
-        foreach(string phrase in textFile.text.Split('\n'))
+        foreach(string phrase in textFile.text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
         {
             phraseQueue.Enqueue(phrase); 
         }

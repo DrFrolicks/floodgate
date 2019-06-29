@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text; 
 using UnityEngine;
 using UnityEngine.UI;
-using System; 
+using System;
+using System.Linq; 
 
 [RequireComponent(typeof(Text))]
 public class HiddenPhrase : MonoBehaviour
@@ -11,9 +12,10 @@ public class HiddenPhrase : MonoBehaviour
     public string completeText;
 
     public Text textComp;
-
+    CharPosition cp; 
     private void Awake()
     {
+        cp = GetComponent<CharPosition>(); 
         textComp.text = new string('\u00A0', completeText.Length);
     }
 
@@ -32,6 +34,7 @@ public class HiddenPhrase : MonoBehaviour
                 StringBuilder sb = new StringBuilder(textComp.text);
                 sb[i] = completeText[i];
                 textComp.text = sb.ToString();
+                
                 return true;  
             }
         }
@@ -41,12 +44,18 @@ public class HiddenPhrase : MonoBehaviour
 
     private void Update()
     {
-        //move onto next phrase
+
+        for (int i = 0; i < textComp.text.Length; i++)
+        {
+            print(cp.GetWorldPosition(i)); 
+        }
+
         if (GameManager.Instance.activePhrase == gameObject && completeText.Replace(" ", "") == textComp.text.Replace("\u00A0", "").Replace(" ", ""))
         {
+            Debug.Log("replacing");
             GameManager.Instance.NextPhrase();
         }
-            
+        
 
         foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
         {

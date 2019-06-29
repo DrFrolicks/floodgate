@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 7576738182415018560}
   - component: {fileID: 7576738182415018561}
   - component: {fileID: 7760592597697554894}
+  - component: {fileID: 2004776826393328846}
   m_Layer: 8
   m_Name: Phrase Template
   m_TagString: Untagged
@@ -192,3 +193,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2004776826393328846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576738182415018569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7375a8ff6c1cb7945ac11aae89122c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComp: {fileID: 1627424131}
+  charIndex: 0
+  canvas: {fileID: 7760592597697554894}
