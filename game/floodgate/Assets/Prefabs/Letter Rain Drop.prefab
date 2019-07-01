@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1022220657783348421}
   - component: {fileID: 4952569299496792130}
   - component: {fileID: 559306074}
+  - component: {fileID: 2651825226092053466}
   m_Layer: 0
   m_Name: Letter Rain Drop
   m_TagString: Untagged
@@ -248,3 +249,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.15
   m_Center: {x: 0.0038000029, y: -0.018286139, z: 0}
+--- !u!114 &2651825226092053466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022220657783348476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e88452891ac10146a70c643f165aae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushForce: 100
+  maxVelocity: 2
+  moving: 1
