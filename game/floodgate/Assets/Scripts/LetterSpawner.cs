@@ -25,12 +25,17 @@ public class LetterSpawner : MonoBehaviour
 
     private void Update()
     {
-        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        //foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        //{
+        //    if (Input.GetKeyDown(vKey) && vKey.ToString().Length == 1)
+        //    {
+        //        SpawnLetter(vKey.ToString());
+        //    }
+        //}
+
+        if(Input.inputString.Length == 1)
         {
-            if (Input.GetKeyDown(vKey) && vKey.ToString().Length == 1)
-            {
-                SpawnLetter(vKey.ToString());
-            }
+            SpawnLetter(Input.inputString);
         }
     }
 }

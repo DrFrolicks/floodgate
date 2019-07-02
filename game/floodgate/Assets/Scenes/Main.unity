@@ -1676,7 +1676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 594694838}
   - component: {fileID: 594694839}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Roof Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
