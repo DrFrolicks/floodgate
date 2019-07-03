@@ -8,8 +8,11 @@ public class FallingChar : MonoBehaviour
     [SerializeField]
     float pushForce, maxVelocity;
 
-    [SerializeField]
     
+    /// <summary>
+    /// The seconds it takes until the falling char starts being pushed towards an OpenSlot 
+    /// </summary>
+    [SerializeField]
     float forceDelay; 
 
     Rigidbody rb; 
@@ -17,28 +20,36 @@ public class FallingChar : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>(); 
-        
     }
 
-  
-    public bool moving;
+    public bool beingPushed;
     private void Start()
     {
         character = GetComponent<TextMeshPro>().text[0];
-        moving = true; 
+        Invoke("startBeingPushed", forceDelay); 
     }
 
     private void Update()
     {
-        if(moving)
+        if (beingPushed)
         {
             Debug.Log((GetClosestOpenPosition() - transform.position).normalized * pushForce * Time.deltaTime);
             rb.AddForce((GetClosestOpenPosition() - transform.position).normalized * pushForce * Time.deltaTime);
             //rb.velocity = Vector3.ClampMagnitude(Vector3.zero, maxVelocity);
         }
-
+    }
+    
+    void startBeingPushed()
+    {
+        print(GetClosestOpenPosition()); 
+        if (GetClosestOpenPosition() != transform.position)
+            beingPushed = true;
     }
 
+    /// <summary>
+    /// Returns the position of the closet open slot with a matching character.
+    /// </summary>
+    /// <returns></returns>
     Vector3 GetClosestOpenPosition()
     {
         List<Slot> openSlots = GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().openSlots;
@@ -51,11 +62,12 @@ public class FallingChar : MonoBehaviour
                 Vector3 worldPos = GameManager.Instance.activePhrase.GetComponent<CharPosition>().GetWorldPosition(s.index);
                 float sDistance = Vector3.Distance(transform.position, worldPos);
                 
-                nearestOpenPos = sDistance < Vector3.Distance(transform.position, nearestOpenPos) ? new Vector3(worldPos.x, 0, worldPos.y) : nearestOpenPos; 
+                nearestOpenPos = sDistance < Vector3.Distance(transform.position, nearestOpenPos) ? new Vector3(worldPos.x, 0, worldPos.z) : nearestOpenPos; 
             }
         }
         return nearestOpenPos.x == Mathf.Infinity ? transform.position : nearestOpenPos; 
     }
-
+    
+    
 
 }

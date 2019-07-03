@@ -15,7 +15,7 @@ public class CharPosition : MonoBehaviour
         charIndex++; 
         string text = textComp.text;
 
-        if (charIndex >= text.Length)
+        if (charIndex > text.Length)
         {
             Debug.Log("Error: char index too high");
         }

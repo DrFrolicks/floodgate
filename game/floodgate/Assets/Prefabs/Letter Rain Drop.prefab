@@ -262,5 +262,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 1000
-  maxVelocity: 2
-  moving: 1
+  maxVelocity: 10
+  forceDelay: 5
+  beingPushed: 0
