@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e88452891ac10146a70c643f165aae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 1000
+  pushForce: 50
   maxVelocity: 10
   forceDelay: 5
   beingPushed: 0

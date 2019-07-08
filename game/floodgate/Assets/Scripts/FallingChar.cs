@@ -17,6 +17,8 @@ public class FallingChar : MonoBehaviour
 
     Rigidbody rb; 
     char character;
+
+    float minStopDist = 0.01f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>(); 
@@ -33,41 +35,52 @@ public class FallingChar : MonoBehaviour
     {
         if (beingPushed)
         {
-            Debug.Log((GetClosestOpenPosition() - transform.position).normalized * pushForce * Time.deltaTime);
-            rb.AddForce((GetClosestOpenPosition() - transform.position).normalized * pushForce * Time.deltaTime);
-            //rb.velocity = Vector3.ClampMagnitude(Vector3.zero, maxVelocity);
+            rb.useGravity = false;
+            rb.AddForce((GetClosestOpenSlot().position - transform.position).normalized * pushForce * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist)
+            {
+                beingPushed = false;
+                rb.isKinematic = true;
+                GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
+                Destroy(rb);
+
+            }
         }
     }
     
+    /// <summary>
+    /// Starts pushing the letter towards an open slot, if available.
+    /// If not, checks again in forceDelay seconds.
+    /// </summary>
     void startBeingPushed()
     {
-        print(GetClosestOpenPosition()); 
-        if (GetClosestOpenPosition() != transform.position)
+        if (GetClosestOpenSlot().position.x != Mathf.Infinity)
+        {
             beingPushed = true;
+        }
+        Invoke("startBeingPushed", forceDelay);
     }
 
     /// <summary>
-    /// Returns the position of the closet open slot with a matching character.
+    /// Returns the closet open slot that matches the character. 
     /// </summary>
     /// <returns></returns>
-    Vector3 GetClosestOpenPosition()
+    Slot GetClosestOpenSlot()
     {
         List<Slot> openSlots = GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().openSlots;
-
-        Vector3 nearestOpenPos = Vector3.positiveInfinity; 
-        foreach(Slot s in openSlots)
+        Slot nearestOpenSlot = new Slot(); 
+        foreach (Slot s in openSlots)
         {
-            if(s.character == character)
+            if (s.character == character)
             {
-                Vector3 worldPos = GameManager.Instance.activePhrase.GetComponent<CharPosition>().GetWorldPosition(s.index);
-                float sDistance = Vector3.Distance(transform.position, worldPos);
-                
-                nearestOpenPos = sDistance < Vector3.Distance(transform.position, nearestOpenPos) ? new Vector3(worldPos.x, 0, worldPos.z) : nearestOpenPos; 
+                float sDistance = Vector3.Distance(transform.position, s.position);
+
+                nearestOpenSlot = sDistance < Vector3.Distance(transform.position, nearestOpenSlot.position) ? s : nearestOpenSlot;
             }
         }
-        return nearestOpenPos.x == Mathf.Infinity ? transform.position : nearestOpenPos; 
+        return nearestOpenSlot; 
     }
-    
     
 
 }
