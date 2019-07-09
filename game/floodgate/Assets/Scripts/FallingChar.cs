@@ -33,18 +33,17 @@ public class FallingChar : MonoBehaviour
 
     private void Update()
     {
+
         if (beingPushed)
         {
             rb.useGravity = false;
             rb.AddForce((GetClosestOpenSlot().position - transform.position).normalized * pushForce * Time.deltaTime);
-
+            rb.velocity = Vector3.ClampMagnitude((GetClosestOpenSlot().position - transform.position).normalized * rb.velocity.magnitude, maxVelocity); 
             if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist)
             {
                 beingPushed = false;
-                rb.isKinematic = true;
                 GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
                 Destroy(rb);
-
             }
         }
     }
@@ -58,8 +57,12 @@ public class FallingChar : MonoBehaviour
         if (GetClosestOpenSlot().position.x != Mathf.Infinity)
         {
             beingPushed = true;
+            Destroy(GetComponent<SphereCollider>()); 
+        } else
+        {
+            Invoke("startBeingPushed", forceDelay);
         }
-        Invoke("startBeingPushed", forceDelay);
+
     }
 
     /// <summary>

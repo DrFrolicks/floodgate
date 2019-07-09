@@ -90,10 +90,10 @@ GameObject:
   - component: {fileID: 7576738182415018566}
   - component: {fileID: 7576738182415018571}
   - component: {fileID: 7576738182415018567}
-  - component: {fileID: 7576738182415018560}
   - component: {fileID: 7576738182415018561}
   - component: {fileID: 7760592597697554894}
   - component: {fileID: 2004776826393328846}
+  - component: {fileID: 7618528133760474481}
   m_Layer: 8
   m_Name: Phrase Template
   m_TagString: Untagged
@@ -144,19 +144,6 @@ MonoBehaviour:
   completeText: "I want nothing more than to give you a big hug\r"
   textComp: {fileID: 1627424131}
   openSlots: []
---- !u!135 &7576738182415018560
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576738182415018569}
-  m_Material: {fileID: 13400000, guid: 287a6edf7b7da054a8c696967291e341, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.15
-  m_Center: {x: 0.0038000029, y: -0.018286139, z: 0}
 --- !u!54 &7576738182415018561
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -209,3 +196,17 @@ MonoBehaviour:
   textComp: {fileID: 1627424131}
   charIndex: 0
   canvas: {fileID: 7760592597697554894}
+--- !u!136 &7618528133760474481
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576738182415018569}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.19370522
+  m_Height: 2.0590956
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
