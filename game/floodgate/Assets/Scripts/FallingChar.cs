@@ -37,12 +37,16 @@ public class FallingChar : MonoBehaviour
         if (beingPushed)
         {
             rb.useGravity = false;
+            if (GetClosestOpenSlot().position.x == Mathf.Infinity)  //if no slot exists
+                return; 
+
             rb.AddForce((GetClosestOpenSlot().position - transform.position).normalized * pushForce * Time.deltaTime);
             rb.velocity = Vector3.ClampMagnitude((GetClosestOpenSlot().position - transform.position).normalized * rb.velocity.magnitude, maxVelocity); 
-            if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist)
+            if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist) //character is in place
             {
                 beingPushed = false;
                 GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
+                transform.parent = GameManager.Instance.activePhrase.transform; 
                 Destroy(rb);
             }
         }
@@ -67,6 +71,7 @@ public class FallingChar : MonoBehaviour
 
     /// <summary>
     /// Returns the closet open slot that matches the character. 
+    /// Returns a default slot with positive infinity position if no slot exists. 
     /// </summary>
     /// <returns></returns>
     Slot GetClosestOpenSlot()
@@ -82,6 +87,7 @@ public class FallingChar : MonoBehaviour
                 nearestOpenSlot = sDistance < Vector3.Distance(transform.position, nearestOpenSlot.position) ? s : nearestOpenSlot;
             }
         }
+        
         return nearestOpenSlot; 
     }
     

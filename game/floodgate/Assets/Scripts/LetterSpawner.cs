@@ -26,10 +26,9 @@ public class LetterSpawner : MonoBehaviour
     private void Update()
     {
 
-        if(Input.inputString.Length == 1)
+        if(Input.anyKeyDown && Input.inputString.Length == 1 && Input.inputString != " ")
         {
-            if(Input.inputString != " ")
-                SpawnLetter(Input.inputString);
+            SpawnLetter(Input.inputString);
         }
     }
 }

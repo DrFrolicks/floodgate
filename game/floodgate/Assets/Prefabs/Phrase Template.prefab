@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01782829b3e910b458838c5adeb68d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  completeText: "I want nothing more than to give you a big hug\r"
+  completeText: thank you soooosososo much
   textComp: {fileID: 1627424131}
   openSlots: []
 --- !u!54 &7576738182415018561
@@ -207,6 +207,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.19370522
-  m_Height: 2.0590956
+  m_Height: 0.67
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}

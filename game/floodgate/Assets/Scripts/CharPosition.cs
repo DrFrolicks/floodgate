@@ -47,19 +47,4 @@ public class CharPosition : MonoBehaviour
 
     }
 
-    //void PrintWorldPos(Vector3 testPoint)
-    //{
-    //    //Vector3 worldPos = textComp.transform.TransformPoint(testPoint);
-    //    //print(worldPos);
-    //    //new GameObject("point").transform.position = worldPos;
-    //    //Debug.DrawRay(worldPos, Vector3.up, Color.red, 50f);
-    //}
-
-    //void OnGUI()
-    //{
-    //    if (GUI.Button(new Rect(10, 10, 100, 80), "Test"))
-    //    {
-    //        PrintPos();
-    //    }
-    //}
 }
