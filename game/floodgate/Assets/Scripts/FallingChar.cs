@@ -45,9 +45,9 @@ public class FallingChar : MonoBehaviour
             if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist) //character is in place
             {
                 beingPushed = false;
-                GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
-                transform.parent = GameManager.Instance.activePhrase.transform; 
+                transform.SetParent(GameManager.Instance.activePhrase.transform, true);  
                 Destroy(rb);
+                GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
             }
         }
     }
