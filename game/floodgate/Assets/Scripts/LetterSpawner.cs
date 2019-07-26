@@ -4,25 +4,53 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
+/// <summary>
+/// Spawns typed letters from left to right with little variaton 
+/// starting from the spawn region to the reset region.
+/// last edited: ec
+/// </summary>
 public class LetterSpawner : MonoBehaviour
 {
 
-    public GameObject letterTemplate;
     public UnityEvent onSpawnText;
-    public BoxCollider spawnRegion;
 
-    private void Awake()
+
+    [SerializeField]
+    GameObject letterTemplate;
+
+    [SerializeField]
+    Transform textCursor;
+
+    [SerializeField]
+    float maxLetterGap, minLetterGap;
+
+    [SerializeField]
+    BoxCollider tcSpawnRegion, tcResetRegion, pnScale;
+
+    Vector2 pnOrg; 
+
+    private void Start()
     {
-        spawnRegion = GetComponent<BoxCollider>();
+        ResetTC();
+        pnOrg = Random.insideUnitCircle * Random.Range(1, 10); 
+        
+        
     }
-
     public void SpawnLetter(string letter)
     {
-        Instantiate(letterTemplate, spawnRegion.bounds.RandomPointInBounds(), letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter; 
+        if (tcResetRegion.bounds.Contains(textCursor.position))
+            ResetTC();
+
+        Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter; 
+        textCursor.position += Vector3.ClampMagnitude(textCursor.transform.right * maxLetterGap 
+
         onSpawnText.Invoke();
     }
 
-
+    private void ResetTC()
+    {
+        textCursor.position = tcSpawnRegion.bounds.RandomPointInBounds();    
+    }
     private void Update()
     {
 
