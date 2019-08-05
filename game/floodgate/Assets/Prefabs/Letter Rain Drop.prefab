@@ -127,7 +127,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -146,11 +146,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 2
+  m_fontSize: 1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 1
+  m_fontSizeMin: 0.001
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 514
@@ -249,7 +249,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.05
   m_Center: {x: 0.0038000029, y: -0.018286139, z: 0}
 --- !u!114 &2651825226092053466
 MonoBehaviour:
@@ -263,8 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e88452891ac10146a70c643f165aae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 50
+  acceleration: 0.05
   maxVelocity: 1
+  lifespanSec: 60
   forceDelay: 5
   beingPushed: 0
 --- !u!95 &-7550040913242118250

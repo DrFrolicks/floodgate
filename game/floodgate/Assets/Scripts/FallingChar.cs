@@ -6,9 +6,9 @@ public class FallingChar : MonoBehaviour
 {
 
     [SerializeField]
-    float pushForce, maxVelocity;
+    float acceleration, maxVelocity, lifespanSec; 
 
-    
+    float velocity = 0f; 
     /// <summary>
     /// The seconds it takes until the falling char starts being pushed towards an OpenSlot 
     /// </summary>
@@ -28,35 +28,44 @@ public class FallingChar : MonoBehaviour
     private void Start()
     {
         character = GetComponent<TextMeshPro>().text[0];
-        Invoke("startBeingPushed", forceDelay); 
+        Invoke("StartBeingPushed", forceDelay);
+        Invoke("KillMyself", lifespanSec);  
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(rb);
+        Destroy(GetComponent<Collider>()); 
+    }
     private void Update()
     {
+        
 
         if (beingPushed)
         {
-            rb.useGravity = false;
             if (GetClosestOpenSlot().position.x == Mathf.Infinity)  //if no slot exists
-                return; 
+                return;
 
-            rb.AddForce((GetClosestOpenSlot().position - transform.position).normalized * pushForce * Time.deltaTime);
-            rb.velocity = Vector3.ClampMagnitude((GetClosestOpenSlot().position - transform.position).normalized * rb.velocity.magnitude, maxVelocity); 
+            velocity += acceleration * Time.deltaTime;  
+            transform.position += Vector3.ClampMagnitude((GetClosestOpenSlot().position - transform.position).normalized * (velocity * Time.deltaTime), maxVelocity); 
+
             if (Vector3.Distance(transform.position, GetClosestOpenSlot().position) < minStopDist) //character is in place
             {
+                CancelInvoke("KillMyself"); 
                 beingPushed = false;
                 transform.SetParent(GameManager.Instance.activePhrase.transform, true);  
-                Destroy(rb);
                 GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().closeSlot(GetClosestOpenSlot().index);
+                GetComponent<Animator>().SetBool("Frozen", true); 
             }
         }
     }
+    
     
     /// <summary>
     /// Starts pushing the letter towards an open slot, if available.
     /// If not, checks again in forceDelay seconds.
     /// </summary>
-    void startBeingPushed()
+    void StartBeingPushed()
     {
         if (GetClosestOpenSlot().position.x != Mathf.Infinity)
         {
@@ -91,5 +100,9 @@ public class FallingChar : MonoBehaviour
         return nearestOpenSlot; 
     }
     
+    void KillMyself()
+    {
+        Destroy(gameObject);  
+    }
 
 }

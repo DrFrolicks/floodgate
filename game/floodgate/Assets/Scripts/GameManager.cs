@@ -9,6 +9,7 @@ using System;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject phraseTemplate; 
+    [HideInInspector]
     public GameObject activePhrase;
 
     public BoxCollider phraseSpawnZone; 

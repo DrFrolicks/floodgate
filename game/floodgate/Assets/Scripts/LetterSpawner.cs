@@ -21,28 +21,46 @@ public class LetterSpawner : MonoBehaviour
     [SerializeField]
     Transform textCursor;
 
+    /// <summary>
+    /// The maximum change in vertical distance in world units between the last letter and the new. 
+    /// Actual change can be between +/- maxDeltaY and is determined by the perlin noise scale factor. 
+    /// </summary>
     [SerializeField]
-    float maxLetterGap, minLetterGap;
+    float maxDeltaVertical;
+
+    /// <summary>
+    /// The horizontal distance gap between each letter. 
+    /// </summary>
+    [SerializeField]
+    float constantDeltaRight; 
 
     [SerializeField]
-    BoxCollider tcSpawnRegion, tcResetRegion, pnScale;
+    BoxCollider tcSpawnRegion, tcResetRegion;
 
-    Vector2 pnOrg; 
+    /// <summary>
+    /// The change in the perlin noise parameters that determine the Y position of the next letter. 
+    /// </summary>
+    [SerializeField]
+    float pnDelta; 
+
+
+    float pnX, pnY; 
 
     private void Start()
     {
         ResetTC();
-        pnOrg = Random.insideUnitCircle * Random.Range(1, 10); 
-        
-        
+        pnX = Random.value * 100f;
+        pnY = Random.value * 100f; 
     }
     public void SpawnLetter(string letter)
     {
-        if (tcResetRegion.bounds.Contains(textCursor.position))
-            ResetTC();
+        Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter;
+        float v = Mathf.PerlinNoise(pnX, pnY);
 
-        Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter; 
-        textCursor.position += Vector3.ClampMagnitude(textCursor.transform.right * maxLetterGap 
+        textCursor.position += (textCursor.transform.right * constantDeltaRight) + (textCursor.transform.up * (-maxDeltaVertical + maxDeltaVertical * v * 2));
+        Debug.Log(v);
+        pnX += pnDelta;
+        pnY += pnDelta; 
 
         onSpawnText.Invoke();
     }
@@ -53,10 +71,12 @@ public class LetterSpawner : MonoBehaviour
     }
     private void Update()
     {
-
-        if(Input.anyKeyDown && Input.inputString.Length == 1 && Input.inputString != " ")
+        if(Input.anyKeyDown && Input.inputString.Length == 1)
         {
-            SpawnLetter(Input.inputString);
+            if (Input.inputString == " " && tcResetRegion.bounds.Contains(textCursor.position)) // if the start of the new word is in the reset zone
+                ResetTC(); 
+            else 
+                SpawnLetter(Input.inputString);
         }
     }
 }
