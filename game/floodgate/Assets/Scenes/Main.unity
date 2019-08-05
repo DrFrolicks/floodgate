@@ -12699,7 +12699,7 @@ PrefabInstance:
     - target: {fileID: 3255635695095080047, guid: e858c2bef15e88c4f9df9a0938f2feb4,
         type: 3}
       propertyPath: maxDeltaVertical
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3255635695095080047, guid: e858c2bef15e88c4f9df9a0938f2feb4,
         type: 3}
