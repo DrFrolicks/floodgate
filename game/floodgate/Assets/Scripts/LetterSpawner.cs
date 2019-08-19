@@ -58,7 +58,7 @@ public class LetterSpawner : MonoBehaviour
         float v = Mathf.PerlinNoise(pnX, pnY);
 
         textCursor.position += (textCursor.transform.right * constantDeltaRight) + (textCursor.transform.up * (-maxDeltaVertical + maxDeltaVertical * v * 2));
-        Debug.Log(v);
+
         pnX += pnDelta;
         pnY += pnDelta; 
 
@@ -69,6 +69,7 @@ public class LetterSpawner : MonoBehaviour
     {
         textCursor.position = tcSpawnRegion.bounds.RandomPointInBounds();    
     }
+
     private void Update()
     {
         if(Input.anyKeyDown && Input.inputString.Length == 1)

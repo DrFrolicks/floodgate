@@ -73,7 +73,7 @@ public class FallingChar : MonoBehaviour
             Destroy(GetComponent<SphereCollider>()); 
         } else
         {
-            Invoke("startBeingPushed", forceDelay);
+            Invoke("StartBeingPushed", forceDelay);
         }
 
     }
