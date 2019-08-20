@@ -47,6 +47,19 @@ public class HiddenPhrase : MonoBehaviour
     public Text textComp;
     public List<Slot> openSlots; 
 
+    /// <summary>
+    /// Returns true if the remaining undiscovered letters are all uppercase. 
+    /// </summary>
+    /// <returns></returns>
+    public bool RemainingLettersUpperCase()
+    {
+        foreach (Slot s in openSlots)
+        {
+            if (char.IsLower(s.character))
+                return false; 
+        }
+        return true; 
+    }
     
     private void Awake()
     {
@@ -106,7 +119,10 @@ public class HiddenPhrase : MonoBehaviour
             {
                 openSlots.RemoveAt(i);
                 if (openSlots.Count == 0)
-                    GameManager.Instance.NextPhrase(); 
+                {
+                    GameManager.Instance.OnPhraseDiscovered.Invoke(); 
+                }
+                    
             }
         }
     }

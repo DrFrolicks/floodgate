@@ -15,7 +15,6 @@ public class GameManager : Singleton<GameManager>
     public BoxCollider phraseSpawnZone; 
     Queue<string> phraseQueue;
 
-    [HideInInspector]
     public int phrasesDiscovered = 0;
 
     [HideInInspector]
@@ -24,6 +23,8 @@ public class GameManager : Singleton<GameManager>
     private new void Awake()
     {
         base.Awake();
+
+        OnPhraseDiscovered.AddListener(ProcessPhraseDiscovered); 
 
         phraseQueue = new Queue<string>();
 
@@ -41,23 +42,24 @@ public class GameManager : Singleton<GameManager>
     {
        if(phrasesDiscovered < phraseQueue.Count)
         {
-            phrasesDiscovered++; 
-
-            if (activePhrase != null)
-                activePhrase.GetComponent<HiddenPhrase>().CloseAllOpenSlots(); //ensures that slots dont check for positions, to allow for multiple phrase position debugging
-
             phraseTemplate.GetComponent<HiddenPhrase>().completeText = phraseQueue.Dequeue();
             activePhrase = Instantiate(phraseTemplate, phraseSpawnZone.bounds.RandomPointInBounds(), phraseTemplate.transform.rotation, transform).gameObject;
-            OnPhraseDiscovered.Invoke(); 
         }
     }
-
 
     private void Start()
     {
         NextPhrase();
     }
 
+    void ProcessPhraseDiscovered()
+    {
+        if (activePhrase != null)
+            activePhrase.GetComponent<HiddenPhrase>().CloseAllOpenSlots(); //ensures that slots dont check for positions, to allow for multiple phrase position debugging
 
+        GameManager.Instance.NextPhrase();
+        GameManager.Instance.phrasesDiscovered++;
+    }
 
+    
 }

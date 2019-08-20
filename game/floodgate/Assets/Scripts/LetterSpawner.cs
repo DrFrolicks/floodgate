@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using System.Linq; 
 
 /// <summary>
 /// Spawns typed letters from left to right with little variaton 
@@ -54,6 +55,9 @@ public class LetterSpawner : MonoBehaviour
     }
     public void SpawnLetter(string letter)
     {
+        if(GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().RemainingLettersUpperCase())
+            letter = letter.ToUpper();
+
         Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter;
         float v = Mathf.PerlinNoise(pnX, pnY);
 
