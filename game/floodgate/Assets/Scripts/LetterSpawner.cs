@@ -33,10 +33,17 @@ public class LetterSpawner : MonoBehaviour
     /// The horizontal distance gap between each letter. 
     /// </summary>
     [SerializeField]
-    float constantDeltaRight; 
+    float constantDeltaRight;
 
     [SerializeField]
-    BoxCollider tcSpawnRegion, tcResetRegion;
+    BoxCollider tcSpawnRegion; 
+    
+
+    /// <summary>
+    /// Hard triggers reset when letter reaches it; soft triggers reset when a new word is started at that location
+    /// </summary>
+    [SerializeField]
+    BoxCollider tcResetRegionHard, tcResetRegionSoft;   
 
     /// <summary>
     /// The change in the perlin noise parameters that determine the Y position of the next letter. 
@@ -78,7 +85,7 @@ public class LetterSpawner : MonoBehaviour
     {
         if(Input.anyKeyDown && Input.inputString.Length == 1)
         {
-            if (Input.inputString == " " && tcResetRegion.bounds.Contains(textCursor.position)) // if the start of the new word is in the reset zone
+            if (tcResetRegionHard.bounds.Contains(textCursor.position) || Input.inputString == " " && tcResetRegionSoft.bounds.Contains(textCursor.position))
                 ResetTC(); 
             else 
                 SpawnLetter(Input.inputString);
