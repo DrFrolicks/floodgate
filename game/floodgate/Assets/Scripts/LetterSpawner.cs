@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
-using System.Linq; 
-
+using System.Linq;
+using UnityEditor; 
 /// <summary>
 /// Spawns typed letters from left to right with little variaton 
 /// starting from the spawn region to the reset region.
@@ -12,6 +12,9 @@ using System.Linq;
 /// </summary>
 public class LetterSpawner : MonoBehaviour
 {
+    [SerializeField]
+    bool spawnsKeypresses; 
+
 
     public UnityEvent onSpawnText;
 
@@ -54,7 +57,7 @@ public class LetterSpawner : MonoBehaviour
 
     float pnX, pnY; 
 
-    private void Start()
+    private void Awake()
     {
         ResetTC();
         pnX = Random.value * 100f;
@@ -64,8 +67,12 @@ public class LetterSpawner : MonoBehaviour
     {
         if(GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().RemainingLettersUpperCase())
             letter = letter.ToUpper();
+        print(letterTemplate);
 
-        Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform).GetComponent<TextMeshPro>().text = letter;
+        GameObject spawnedLetter = Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform); 
+        spawnedLetter.GetComponent<TextMeshPro>().text = letter;
+        print(spawnedLetter); 
+        EditorGUIUtility.PingObject(spawnedLetter); 
         float v = Mathf.PerlinNoise(pnX, pnY);
 
         textCursor.position += (textCursor.transform.right * constantDeltaRight) + (textCursor.transform.up * (-maxDeltaVertical + maxDeltaVertical * v * 2));
@@ -74,16 +81,17 @@ public class LetterSpawner : MonoBehaviour
         pnY += pnDelta; 
 
         onSpawnText.Invoke();
+        //EditorApplication.isPaused = true; 
     }
 
-    private void ResetTC()
+    public void ResetTC()
     {
         textCursor.position = tcSpawnRegion.bounds.RandomPointInBounds();    
     }
 
     private void Update()
     {
-        if(Input.anyKeyDown && Input.inputString.Length == 1)
+        if(spawnsKeypresses && Input.anyKeyDown && Input.inputString.Length == 1)
         {
             if (tcResetRegionHard.bounds.Contains(textCursor.position) || Input.inputString == " " && tcResetRegionSoft.bounds.Contains(textCursor.position))
                 ResetTC(); 

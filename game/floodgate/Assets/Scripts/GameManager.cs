@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject activePhrase;
 
     public BoxCollider phraseSpawnZone; 
-    Queue<string> phraseQueue;
+    public Queue<string> phraseQueue;
 
     public int phrasesDiscovered = 0;
 
@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
             phraseQueue.Enqueue(phrase); 
         }
         phraseQueue = new Queue<string>(phraseQueue.Shuffle<string>().ToList<string>());
-       
+        NextPhrase();
     }
 
     public void NextPhrase()
@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        NextPhrase();
+        
     }
 
     void ProcessPhraseDiscovered()
