@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using System.Linq;
-using UnityEditor; 
+
 /// <summary>
 /// Spawns typed letters from left to right with little variaton 
 /// starting from the spawn region to the reset region.
@@ -71,8 +71,6 @@ public class LetterSpawner : MonoBehaviour
 
         GameObject spawnedLetter = Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform); 
         spawnedLetter.GetComponent<TextMeshPro>().text = letter;
-        print(spawnedLetter); 
-        EditorGUIUtility.PingObject(spawnedLetter); 
         float v = Mathf.PerlinNoise(pnX, pnY);
 
         textCursor.position += (textCursor.transform.right * constantDeltaRight) + (textCursor.transform.up * (-maxDeltaVertical + maxDeltaVertical * v * 2));

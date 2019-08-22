@@ -34,8 +34,11 @@ public class FallingChar : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(rb);
-        Destroy(GetComponent<Collider>()); 
+        if(collision.gameObject.CompareTag("Tent"))
+        {
+            Destroy(rb);
+            Destroy(GetComponent<Collider>());
+        }
     }
     private void Update()
     {
