@@ -67,7 +67,6 @@ public class LetterSpawner : MonoBehaviour
     {
         if(GameManager.Instance.activePhrase.GetComponent<HiddenPhrase>().RemainingLettersUpperCase())
             letter = letter.ToUpper();
-        print(letterTemplate);
 
         GameObject spawnedLetter = Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform); 
         spawnedLetter.GetComponent<TextMeshPro>().text = letter;
