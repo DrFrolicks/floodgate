@@ -70,6 +70,7 @@ public class LetterSpawner : MonoBehaviour
 
         GameObject spawnedLetter = Instantiate(letterTemplate, textCursor.position, letterTemplate.transform.rotation, transform); 
         spawnedLetter.GetComponent<TextMeshPro>().text = letter;
+        spawnedLetter.GetComponent<Rigidbody>().velocity = Vector3.down * 80f; 
         float v = Mathf.PerlinNoise(pnX, pnY);
 
         textCursor.position += (textCursor.transform.right * constantDeltaRight) + (textCursor.transform.up * (-maxDeltaVertical + maxDeltaVertical * v * 2));
