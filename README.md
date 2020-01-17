@@ -1,2 +1,2 @@
 # floodgate
-raen letters down on your tent to reveal secrets
+Unity3D art game to celebrate a relationship's one-month anniversary.
